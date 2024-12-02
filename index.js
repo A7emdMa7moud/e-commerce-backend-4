@@ -24,7 +24,6 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
-
 app.use(cookieParser());
 
 app.use("/ecommerce/admin", admin);
@@ -35,5 +34,5 @@ app.use("/ecommerce", user);
 app.use("/", auth);
 
 app.listen(PORT, () => {
-  console.log(`Server running on localhost:${PORT}`);
+  console.log(`=> Server running on localhost:${PORT}`);
 });
