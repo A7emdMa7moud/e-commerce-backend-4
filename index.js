@@ -24,7 +24,6 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
-console.log("hello world");
 app.use(cookieParser());
 
 app.use("/ecommerce/admin", admin);
