@@ -36,3 +36,7 @@ app.use("/", auth);
 app.listen(PORT, () => {
   console.log(`=> Server running on localhost:${PORT}`);
 });
+
+app.get("/", (req, res) => {
+  res.json({ msg: "hello world" });
+});
