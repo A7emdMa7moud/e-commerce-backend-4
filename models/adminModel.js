@@ -18,11 +18,6 @@ const adminSchema = new mongoose.Schema(
       minLength: [6, "the minimum length is 6 characters"],
       maxlength: 12,
     },
-    role: {
-      type: String,
-      enum: ["delivery", "admin"],
-      required: true,
-    },
   },
   { versionKey: false }
 );

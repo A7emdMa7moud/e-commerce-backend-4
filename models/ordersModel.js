@@ -5,6 +5,9 @@ const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
+  totalPrice: { type: Number, required: true },
+  discount: { type: Number, required: true },
+  lastPrice: { type: Number, required: true },
 });
 const orderSchema = new mongoose.Schema(
   {
@@ -30,10 +33,14 @@ const orderSchema = new mongoose.Schema(
       country: { type: String, required: true },
     },
     products: [productSchema],
-    totalPrice: { type: Number, required: true },
     status: {
       type: String,
       enum: ["pending", "shipped", "celivered", "cancelled"],
+      default: "pending",
+    },
+    PaymentStatus: {
+      type: String,
+      enum: ["paid", "pending", "failed"],
       default: "pending",
     },
     paymentMethod: {
@@ -42,15 +49,11 @@ const orderSchema = new mongoose.Schema(
       default: "cash on delivery",
       required: true,
     },
-    PaymentStatus: {
-      type: String,
-      enum: ["paid", "pending", "failed"],
-      default: "pending",
-    },
-    deliveryDate: { type: Date, required: true },
     orderDate: { type: Date, default: Date.now },
+    deliveryDate: { type: Date, required: true },
     discount: { type: Number, default: 0 },
-    customerNotes: { type: String },
+    totalPrice: { type: Number, required: true },
+    customerNotes: { type: String, default: "no customer notes." },
   },
   { versionKey: false }
 );

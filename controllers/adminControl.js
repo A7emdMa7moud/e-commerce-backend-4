@@ -140,10 +140,9 @@ const getProducts = async (req, res) => {
 };
 const getProductsByCategory = async (req, res) => {
   const { termPath } = req.params;
-  console.log("termPath => ", termPath);
   getCategories().then(async (categories) => {
     try {
-      console.log("categories => ", categories);
+      // console.log("categories => ", categories);
       if (categories.includes(termPath)) {
         const categorys = await Product.find({ category: termPath });
         res.status(200).json({ SUCCESS, data: categorys });

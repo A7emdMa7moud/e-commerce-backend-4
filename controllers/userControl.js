@@ -1,30 +1,61 @@
 const User = require("../models/userModel");
-const { UPDATED, BAD_REQUEST, NOT_FOUND } = require("../utils/masages");
+const {
+  UPDATED,
+  BAD_REQUEST,
+  NOT_FOUND,
+  SUCCESS,
+} = require("../utils/masages");
+// get user cart
+const userCart = async (req, res) => {
+  try {
+    const userId = req.params.uid;
+    const userCart = await User.findById(userId, "cart");
+    if (!userCart) {
+      res
+        .status(BAD_REQUEST.code)
+        .json({ BAD_REQUEST, msg: "user is not defind" });
+    }
+    res.status(200).json({ SUCCESS, userCart });
+  } catch (error) {
+    res.status(500).json({ BAD_REQUEST, error: error.message });
+  }
+};
+// get user orders
+const userOrder = async (req, res) => {
+  try {
+    const userId = req.params.uid;
+    const userOrder = await User.findById(userId, "orders");
+    if (!userOrder) {
+      res
+        .status(BAD_REQUEST.code)
+        .json({ BAD_REQUEST, msg: "user is not defind" });
+    }
+    res.status(200).json({ SUCCESS, userOrder });
+  } catch (error) {
+    res.status(500).json({ BAD_REQUEST, error: error.message });
+  }
+};
 // update only cart
 const updata_cart = async (req, res) => {
   try {
     const userId = req.params.uid;
     const { cart } = req.body;
-
     if (!cart) {
       return res.status(400).json({
         BAD_REQUEST,
       });
     }
-
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $set: { cart } },
       { new: true }
     );
-
     if (!updatedUser) {
       return res.status(404).json({ NOT_FOUND });
     }
-
     res.status(200).json({
       UPDATED,
-      updatedUser,
+      updatedUser: updatedUser.cart,
     });
   } catch (err) {
     res.status(500).json({
@@ -97,4 +128,10 @@ const deliveryDetails = async (req, res) => {
     });
   }
 };
-module.exports = { updata_cart, updata_order, deliveryDetails };
+module.exports = {
+  userCart,
+  userOrder,
+  updata_cart,
+  updata_order,
+  deliveryDetails,
+};

@@ -3,15 +3,18 @@ const { isEmail } = require("validator");
 const hashPassword = require("../controllers/hashPassword");
 const bcrypt = require("bcrypt");
 
-const productSchema = new mongoose.Schema({
+const productOrder = new mongoose.Schema({
   name: { type: String, required: true },
-  price: { type: Number, required: true },
   quantity: { type: Number, required: true },
   category: { type: String, required: true },
+  productId: { type: String, required: true },
+  price: { type: Number, required: true },
+  discount: { type: Number, required: true, default: 0 },
+  lastPrice: { type: Number, required: true, default: 0 },
 });
 
 const orderSchema = new mongoose.Schema({
-  products: [productSchema],
+  products: [productOrder],
   totalPrice: { type: Number, required: true, default: 0 },
   phone: {
     type: String,
@@ -24,8 +27,16 @@ const orderSchema = new mongoose.Schema({
   quantity: { type: Number, default: 0 },
   orderDate: { type: Date, default: Date.now },
 });
+const productCart = new mongoose.Schema({
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
+  quantity: { type: Number, required: true },
+  category: { type: String, required: true },
+  productId: { type: String, required: true },
+  discount: { type: Number, required: true, default: 0 },
+});
 const cartSchemna = new mongoose.Schema({
-  products: [productSchema],
+  products: [productCart],
   totalPrice: { type: Number, required: true, default: 0 },
   quantity: { type: Number, required: true, default: 0 },
 });

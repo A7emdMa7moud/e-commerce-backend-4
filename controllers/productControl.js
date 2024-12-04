@@ -1,13 +1,6 @@
 const Product = require("../models/productModel");
 const getCategories = require("./getCategories");
-const {
-  CREATED,
-  SUCCESS,
-  BAD_REQUEST,
-  SERVER_ERROR,
-  DELETED,
-  UPDATED,
-} = require("../utils/masages");
+const { SUCCESS, BAD_REQUEST, SERVER_ERROR } = require("../utils/masages");
 // [GET] get products
 const getProducts = async (req, res) => {
   try {
@@ -20,10 +13,8 @@ const getProducts = async (req, res) => {
 // [GET] get product by ID
 const getProductsByCategory = async (req, res) => {
   const { termPath } = req.params;
-  console.log("termPath => ", termPath);
   getCategories().then(async (categories) => {
     try {
-      console.log("categories => ", categories);
       if (categories.includes(termPath)) {
         const categorys = await Product.find({ category: termPath });
         res.status(200).json({ SUCCESS, data: categorys });
