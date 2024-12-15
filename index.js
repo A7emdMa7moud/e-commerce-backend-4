@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:2000",
+    origin: "http://localhost:3000",
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -39,5 +39,5 @@ app.listen(PORT, () => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ msg: "url is avelable, can you using now '❤️'." });
+  res.json({ msg: "url is avelable, can you using now '❤️'.." });
 });
