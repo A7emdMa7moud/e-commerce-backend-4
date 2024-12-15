@@ -47,7 +47,7 @@ const orderSchema = new mongoose.Schema(
       enum: ["credit card", "payPal", "cash on delivery"],
       default: "cash on delivery",
       required: true,
-    },  
+    },
     orderDate: { type: Date, default: Date.now },
     discount: { type: Number, default: 0 },
     deliveryDate: { type: Date, required: true },
