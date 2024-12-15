@@ -17,10 +17,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://e-commerce-frontend-4.vercel.app",
-    ],
+    origin: "http://localhost:2000",
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
