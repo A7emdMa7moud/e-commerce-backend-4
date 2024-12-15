@@ -42,5 +42,5 @@ app.listen(PORT, () => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ msg: "url is avelable, can you using now '❤️'.." });
+  res.json({ msg: "url is avelable, can you using now '❤️'..." });
 });
