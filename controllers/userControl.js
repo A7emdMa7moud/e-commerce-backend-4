@@ -4,8 +4,27 @@ const {
   BAD_REQUEST,
   NOT_FOUND,
   SUCCESS,
+  SERVER_ERROR,
 } = require("../utils/masages");
-// get user cart
+
+const userDetails = async (req, res) => {
+  try {
+    const userId = req.params.uid;
+    const details = await User.findById(
+      userId,
+      "name email age gender phone deliveryInfoProvided"
+    );
+    if (!details) {
+      res
+        .status(BAD_REQUEST.code)
+        .json({ BAD_REQUEST, msg: "user is not defind" });
+    }
+    res.status(200).json({ SUCCESS, details });
+  } catch (error) {
+    res.status(500).json({ BAD_REQUEST, error: error.message });
+  }
+};
+
 const userCart = async (req, res) => {
   try {
     const userId = req.params.uid;
@@ -20,7 +39,7 @@ const userCart = async (req, res) => {
     res.status(500).json({ BAD_REQUEST, error: error.message });
   }
 };
-// get user orders
+
 const userOrder = async (req, res) => {
   try {
     const userId = req.params.uid;
@@ -35,7 +54,7 @@ const userOrder = async (req, res) => {
     res.status(500).json({ BAD_REQUEST, error: error.message });
   }
 };
-// update only cart
+
 const updata_cart = async (req, res) => {
   try {
     const userId = req.params.uid;
@@ -63,13 +82,13 @@ const updata_cart = async (req, res) => {
     });
   }
 };
-// update only orders
+// update order and reset cart
 const updata_order = async (req, res) => {
   try {
     const userId = req.params.uid;
-    const { orders } = req.body;
+    const { order } = req.body;
 
-    if (!orders) {
+    if (!order) {
       return res.status(400).json({
         BAD_REQUEST,
       });
@@ -77,7 +96,10 @@ const updata_order = async (req, res) => {
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { $set: { orders } },
+      {
+        $push: { orders: order },
+        $set: { cart: [] },
+      },
       { new: true }
     );
 
@@ -95,7 +117,7 @@ const updata_order = async (req, res) => {
     });
   }
 };
-// update delivery details and set deliveryInfoProvided=true
+
 const deliveryDetails = async (req, res) => {
   try {
     const userId = req.params.uid;
@@ -129,6 +151,7 @@ const deliveryDetails = async (req, res) => {
   }
 };
 module.exports = {
+  userDetails,
   userCart,
   userOrder,
   updata_cart,

@@ -17,7 +17,6 @@ const orderSchema = new mongoose.Schema(
       email: {
         type: String,
         required: true,
-        unique: true,
         validate: [
           isEmail,
           "Please enter a valid email address. This email has already placed an order.",
@@ -48,11 +47,12 @@ const orderSchema = new mongoose.Schema(
       enum: ["credit card", "payPal", "cash on delivery"],
       default: "cash on delivery",
       required: true,
-    },
+    },  
     orderDate: { type: Date, default: Date.now },
-    deliveryDate: { type: Date, required: true },
     discount: { type: Number, default: 0 },
+    deliveryDate: { type: Date, required: true },
     totalPrice: { type: Number, required: true },
+    lastPrice: { type: Number, required: true },
     customerNotes: { type: String, default: "no customer notes." },
   },
   { versionKey: false }

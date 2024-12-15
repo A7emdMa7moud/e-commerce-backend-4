@@ -12,7 +12,6 @@ const productOrder = new mongoose.Schema({
   discount: { type: Number, required: true, default: 0 },
   lastPrice: { type: Number, required: true, default: 0 },
 });
-
 const orderSchema = new mongoose.Schema({
   products: [productOrder],
   totalPrice: { type: Number, required: true, default: 0 },
@@ -23,9 +22,11 @@ const orderSchema = new mongoose.Schema({
     minlength: [11, "Phone number must be exactly 11 digits long"],
     quantity: Number,
     match: [/^\d{11}$/, "Please enter a valid 11-digit phone number"],
+    required: true,
   },
-  quantity: { type: Number, default: 0 },
+  quantity: { type: Number, default: 0, required: true },
   orderDate: { type: Date, default: Date.now },
+  deliveryDate: { type: Date, required: true },
 });
 const productCart = new mongoose.Schema({
   name: { type: String, required: true },
@@ -40,7 +41,6 @@ const cartSchemna = new mongoose.Schema({
   totalPrice: { type: Number, required: true, default: 0 },
   quantity: { type: Number, required: true, default: 0 },
 });
-
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -65,10 +65,15 @@ const userSchema = new mongoose.Schema(
     },
     age: {
       type: Number,
-      required: false,
       maxlength: [2, "are you sure your age is correct"],
       minlength: [1, "are you sure your age is correct"],
     },
+    phone: {
+      type: String,
+      minLength: [11, "the minimum length is 11 characters"],
+      maxLength: [11, "the minimum length is 11 characters"],
+    },
+    theme: { type: String, enum: ["dark", "light"], default: "dark" },
     cart: [cartSchemna],
     orders: [orderSchema],
     deliveryDetails: {

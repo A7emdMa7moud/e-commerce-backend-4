@@ -1,5 +1,6 @@
 const express = require("express");
 const {
+  userDetails,
   updata_cart,
   updata_order,
   deliveryDetails,
@@ -8,6 +9,8 @@ const {
 } = require("../controllers/userControl");
 const router = express.Router();
 
+// get user details
+router.get("/user/:uid", userDetails);
 // get user cart
 router.get("/cart/:uid", userCart);
 // get user orders

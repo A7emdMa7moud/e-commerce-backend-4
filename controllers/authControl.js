@@ -24,8 +24,10 @@ const login_POST = async (req, res) => {
         email: user.email,
         gender: user.gender,
         age: user.age,
+        phone: user.phone,
         cart: user.cart,
         orders: user.orders,
+        theme: user.theme,
       },
     });
   } catch (error) {
@@ -35,21 +37,36 @@ const login_POST = async (req, res) => {
 };
 const sginup_POST = async (req, res) => {
   try {
-    const { name, email, password, gender, age } = req.body;
-    const newUser = await User.create({
+    const { name, email, password, gender, age, phone, theme } = req.body;
+    const user = await User.create({
       name,
       email,
       password,
       gender,
       age,
+      phone,
+      theme,
     });
 
-    const token = createToken(newUser._id);
+    const token = createToken(user._id);
     res.cookie("jwt", token, {
       httpOnly: true,
     });
 
-    res.status(201).json({ CREATED, newUser });
+    res.status(201).json({
+      CREATED,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        gender: user.gender,
+        age: user.age,
+        phone: user.phone,
+        cart: user.cart,
+        orders: user.orders,
+        theme: user.theme,
+      },
+    });
   } catch (err) {
     const error = valiedetionError(err);
     res.status(500).json({ INVALID_CREDENTIALS, error });

@@ -18,7 +18,7 @@ const getCategories = require("./getCategories");
 const Category = require("../models/categoreModel");
 const Admin = require("../models/adminModel");
 const createToken = require("./createToken");
-
+// users
 const get_users = async (req, res) => {
   try {
     const users = await User.find();
@@ -27,6 +27,7 @@ const get_users = async (req, res) => {
     res.status(404).json({ SERVER_ERROR, error: error.message });
   }
 };
+// admin
 const getAdmins = async (req, res) => {
   try {
     const admins = await Admin.find();
@@ -83,6 +84,7 @@ const logoutAdmin = (req, res) => {
     res.status(500).json({ LOGOUT_SUCCESS });
   }
 };
+// products
 const addProducts = async (req, res) => {
   try {
     const { name, price, category, inStock, quantity, newProduct, discount } =
@@ -167,6 +169,7 @@ const getProductIdInCategory = async (req, res) => {
     res.status(500).json({ SERVER_ERROR, msg: error.message });
   }
 };
+// category
 const getCategoey = async (req, res) => {
   try {
     const categores = await Category.find({});
@@ -198,6 +201,7 @@ const addCategory = async (req, res) => {
     res.status(500).json({ SERVER_ERROR, msg: error.message });
   }
 };
+// orders
 const get_orders = async (req, res) => {
   try {
     const orders = await Order.find();
